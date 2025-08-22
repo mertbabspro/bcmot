@@ -13,7 +13,7 @@ function createBot() {
 
     // 1️⃣ /login
     setTimeout(() => {
-      bot.chat("/login benbitben");
+      bot.chat("/register benbitben benbitben");
       console.log("/login komutu gönderildi ✅");
     }, 5000);
 
