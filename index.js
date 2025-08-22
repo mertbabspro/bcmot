@@ -16,7 +16,7 @@ function createBot() {
     if (!loginSent) {
       // 1️⃣ /login
       setTimeout(() => {
-        bot.chat("/login benbitben")
+        bot.chat("/register benbitben benbitben")
         console.log("/login komutu gönderildi ✅")
         loginSent = true // sadece bir kez gönderildi
 
