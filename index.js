@@ -1,64 +1,49 @@
-const mineflayer = require('mineflayer');
+const mineflayer = require('mineflayer')
+
+let loginSent = false; // login komutunun gönderilip gönderilmediğini kontrol etmek için
 
 function createBot() {
   const bot = mineflayer.createBot({
     host: "zurnacraft.net",
     port: 25565,
-    username: "cengizpoyraztunc",
+    username: "cengizpoyraz",
     version: "1.19"
-  });
+  })
 
   bot.on('login', () => {
-    console.log("Bot sunucuya bağlandı ✅ Komutlar gönderiliyor...");
+    console.log("Bot sunucuya bağlandı ✅")
 
-    // 1️⃣ /login
-    setTimeout(() => {
-      bot.chat("/login benbitben");
-      console.log("/login komutu gönderildi ✅");
-    }, 7000); // 7 saniye
+    if (!loginSent) {
+      // 1️⃣ /login
+      setTimeout(() => {
+        bot.chat("/login benbitben")
+        console.log("/login komutu gönderildi ✅")
+        loginSent = true // sadece bir kez gönderildi
 
-    // 2️⃣ /warp afk
-    setTimeout(() => {
-      bot.chat("/warp afk");
-      console.log("/warp afk komutu gönderildi ✅");
-    }, 15000); // 15 saniye
+        // 2️⃣ Her dakika /shard pay obbyzz 1
+        setInterval(() => {
+          bot.chat("/shard pay obbyzz 1")
+          console.log("/shard pay obbyzz 1 komutu gönderildi ✅")
+        }, 60000) // 1 dakika
+      }, 5000)
+    }
+  })
 
-    // 3️⃣ /shard balance
-    setTimeout(() => {
-      bot.chat("/shard balance");
-      console.log("/shard balance komutu gönderildi ✅");
-    }, 25000); // 25 saniye
-
-    // 4️⃣ Her 3 dakikada /shard pay obbyzz 1
-    setTimeout(() => {
-      setInterval(() => {
-        bot.chat("/shard pay obbyzz 1");
-        console.log("/shard pay obbyzz 1 komutu gönderildi ✅");
-      }, 180000); // 180000ms = 3 dakika
-    }, 30000); // önce balance komutu gönderilsin
-  });
-
+  // Chat logları
   bot.on('chat', (username, message) => {
-    console.log(`[CHAT] <${username}> ${message}`);
-  });
+    console.log(`[CHAT] <${username}> ${message}`)
+  })
 
   bot.on('whisper', (username, message) => {
-    console.log(`[WHISPER] <${username}> ${message}`);
-  });
+    console.log(`[WHISPER] <${username}> ${message}`)
+  })
 
   bot.on('end', () => {
-    console.log("Bağlantı koptu, 10 sn sonra tekrar bağlanacak...");
-    setTimeout(createBot, 10000);
-  });
+    console.log("Bağlantı koptu, 5 sn sonra tekrar bağlanacak...")
+    setTimeout(createBot, 5000)
+  })
 
-  bot.on('kicked', reason => {
-    console.log("Sunucudan atıldım:", reason);
-    setTimeout(createBot, 10000);
-  });
-
-  bot.on('error', err => {
-    console.log("Hata:", err.message);
-  });
+  bot.on('error', err => console.log("Hata:", err))
 }
 
-createBot();
+createBot()
