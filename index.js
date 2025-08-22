@@ -1,6 +1,6 @@
 const mineflayer = require('mineflayer')
 
-let loginSent = false; // login komutunun gönderilip gönderilmediğini kontrol etmek için
+let loginSent = false; // /login sadece bir kez gönderilsin
 
 function createBot() {
   const bot = mineflayer.createBot({
@@ -16,16 +16,22 @@ function createBot() {
     if (!loginSent) {
       // 1️⃣ /login
       setTimeout(() => {
-        bot.chat("/register benbitben benbitben")
+        bot.chat("/login benbitben")
         console.log("/login komutu gönderildi ✅")
-        loginSent = true // sadece bir kez gönderildi
+        loginSent = true
 
-        // 2️⃣ Her dakika /shard pay obbyzz 1
+        // 2️⃣ /warp afk 20 saniye sonra
+        setTimeout(() => {
+          bot.chat("/warp afk")
+          console.log("/warp afk komutu gönderildi ✅")
+        }, 20000)
+
+        // 3️⃣ Her dakika /shard pay obbyzz 1
         setInterval(() => {
           bot.chat("/shard pay obbyzz 1")
           console.log("/shard pay obbyzz 1 komutu gönderildi ✅")
         }, 60000) // 1 dakika
-      }, 5000)
+      }, 5000) // /login komutu 5 saniye sonra
     }
   })
 
